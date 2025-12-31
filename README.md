@@ -1,7 +1,67 @@
 # C++ Small Projects
 
-This repository contains small C++ projects built for learning
-and practicing core programming concepts.
+This repository contains a collection of small **C++ mini projects** created to
+strengthen core programming fundamentals and object-oriented concepts.
 
-## Projects
-- Calculator – Menu-driven calculator with history (OOP-based)
+Each project is built step by step while learning C++, focusing on **clarity,
+logic, and clean structure** rather than shortcuts.
+
+---
+
+## 📌 Projects Included
+
+### 1️⃣ Calculator (OOP-Based)
+A menu-driven calculator application implemented using **Object-Oriented Programming**.
+
+**Features:**
+- Supports basic arithmetic operations
+- Menu-driven interface
+- Maintains calculation history
+- Uses classes and encapsulation
+- Clean input/output handling
+
+---
+
+## 🧠 Concepts Practiced
+- Object-Oriented Programming (OOP)
+- Classes & Objects
+- Functions and control flow
+- STL basics
+- Input validation
+- Modular code design
+
+---
+
+## 🛠️ Technologies Used
+- Language: **C++**
+- Compiler: GCC / MinGW
+- Standard: C++17 (recommended)
+
+---
+
+## 🚀 How to Run
+```bash
+g++ calculator.cpp -o calculator
+./calculator
+🎯 Purpose of This Repository
+This repository is meant for:
+
+Practicing C++ fundamentals
+
+Building logic through mini projects
+
+Preparing for interviews and academic evaluations
+
+📚 Future Plans
+Add more C++ mini projects
+
+Improve error handling
+
+Apply advanced OOP concepts
+
+Refactor code for better performance
+
+👤 Author
+Priyanshu
+
+Learning, building, and improving one project at a time.
