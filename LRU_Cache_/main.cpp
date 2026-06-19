@@ -22,7 +22,7 @@ class LRUCache
 {
 private:
     int capacity;
-    unordered_map<int, Node *> cache;
+    unordered_map<int, Node *> cache; // hash map
 
     Node *head; // head of a node  (Most recent used)
     Node *tail; //  tail of a node  (Least Recent used)
