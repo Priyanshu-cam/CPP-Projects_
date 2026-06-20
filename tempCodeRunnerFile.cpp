@@ -1,49 +1,51 @@
-// Simple Game using C++ 
+// Rock-paper scissor game 
 #include<iostream>
-#include <cstdlib>
-#include <ctime> 
+#include<cstdlib>
+#include<ctime>
 
 using namespace std; 
 
 int main(){
+    cout<<"==============================" <<endl;
+    cout<<"Welcome to Rock-Paper-Scissors Game! "<<endl;
+    cout<<"==============================" <<endl;
+    cout<<"Let's play the Game!" <<endl;
 
-  srand(time(0)); // seeding the random number generator with the current time 
-  // Srand() is used to seed the random number where time is the base condition for that --> means every time program is run, it will generate a random number based on the current time 
+    int playerScore = 0; 
+    int computerScore = 0; 
 
-  int number = rand() % 100 + 1; // generate a random number between 1 to 100 
+    int playerChoice; 
+    cout<<"Enter your choice: 1.Rock, 2.Paper, 3.Scissors: "<<endl;
+    cin>>playerChoice; 
 
-  int guess; // this will store the user input 
-  int attempts = 0;  // number of attempts made by the user 
-  int maxAttempts = 5; // maximum number of attempts allowed 
+    int computerChoice = rand() % 3 + 1; // this will generate a random choice from the computer 
 
-  cout<<"<====================================================>"<<endl; 
-  cout<<"Welcome to the Number guessing game!"<<endl; 
-  cout<<"<====================================================>"<<endl; 
-  cout<<"The number has been selected between 1 and 100. Can you Guess it? "<<endl;
+    if(computerChoice == 1)cout<<"Computer chose Rock"<<endl;
+    else if(computerChoice == 2) cout<<"Computer chose Paper"<<endl;
+    else cout<<"Computer chose Scissors"<<endl;
 
-  while(attempts < maxAttempts){
-    cout<<"Enter your number: "; 
-    cin>>guess; 
-    attempts++; 
-
-    if(guess == number){
-      cout<<"Congratulations! You guessed the number in "<<attempts<<" attemps!"<<endl;
-      cout<<"<====================================================>"<<endl; 
-      return 0;
-    }else if(guess < number){
-      cout<<"Too Low! try again. "<<endl;
-      cout<<"<====================================================>"<<endl; 
-      cout<<"Attempts left: "<<maxAttempts - attempts<<endl;
-    }else{
-      cout<<"Too High! try again."<<endl;
-      cout<<"<====================================================>"<<endl; 
-      cout<<"Attempts left: "<<maxAttempts - attempts<<endl;
+    if(playerChoice == computerChoice){ //Tie condition
+        cout<<"It's a tie!"<<endl;
     }
+    else if(playerChoice == 1 && computerChoice == 3){ // Rock vs Scissor -> Rock wins
+        cout<<"You win!"<<endl;
+        playerScore++;
     }
-    if(attempts == maxAttempts){
+    else if(playerChoice == 2 && computerChoice == 1){ // Paper vs Rock -> Paper wins
+        cout<<"You Win!"<<endl;
+        playerScore++;
+    }else{ // Scissors vs Paper -> Scissors wins
+        cout<<"Computer Wins!"<<endl;
+        computerScore++;
+    }
+    if(playerScore > computerScore){
+        cout<<"Congratulations! You won the game!"<<endl;
+        cout<<"You have defeated the computer with a score of "<<playerScore - computerScore<<endl;
+    }
+    else{
+        cout<<"Computer won the game!"<<endl;
+        cout<<"Better luck next time! Computer has defeated you with a score of "<<computerScore - playerScore<<endl;
+    }
 
-      cout<<"Sorry! You've used all your attempts. The number was: "<<number<<endl;
-      cout<<"<====================================================>"<<endl; 
-    }
     return 0; 
-  }
+}
