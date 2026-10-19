@@ -4,6 +4,8 @@
 #include <string>
 #include <fstream>
 #include <limits>
+#include<conio.h>
+#include<cctype>
 
 using namespace std;
 
@@ -16,6 +18,30 @@ private:
     string emailId;
 
 public:
+    string getPassword(){
+    string password; 
+    int ch; 
+
+    while(true){
+        ch = _getch(); // read key without displaying it 
+
+        if(ch == '\r') break; // enter key pressed, brea the loop 
+        else if(ch == '\b'){
+            if(!password.empty()){
+                password.pop_back(); 
+                cout<<"\b \b"; // erase the last character from console
+            }
+        }
+        else if(ch == 0 || ch == 224) _getch(); // handle special keys 
+        else if(isprint(static_cast<unsigned char>(ch))){
+            password += static_cast<char>(ch); 
+            cout<<"*"; // display asterisk for each character entered
+        }
+    }
+
+    cout<<endl; // move to the next line after password input
+    return password;
+}
     void login()
     {
         string uName;
@@ -25,7 +51,7 @@ public:
         getline(cin, uName);
 
         cout << "Enter password" << endl;
-        getline(cin, pass);
+        pass = getPassword(); 
 
         cout << "------------------------------" << endl;
         ifstream fin(uName + ".txt");
@@ -68,7 +94,7 @@ public:
         getline(cin, userName);
 
         cout << "Enter password " << endl;
-        getline(cin, password);
+        password = getPassword();
         cout << "--------------------------------" << endl;
 
         // Storing user inputs

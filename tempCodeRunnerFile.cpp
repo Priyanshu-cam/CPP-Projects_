@@ -1,25 +1,24 @@
-// build an login/signup system using cpp and file handling
-// 1 update: want that the password should be visible in dotted form only 
-// 2 Update: that data should be stored in an organized format like username category contains usernames and password category contains passwords.
+// Login and Registration System project
 
-#include<iostream>
-#include<fstream>
-#include<string>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <limits>
 #include<conio.h>
 #include<cctype>
 
-using namespace std; 
+using namespace std;
 
-const string FILENAME = "usercredentials.txt"; 
+class Authentication
+{
+private:
+    string userName;
+    string password;
+    string fullName;
+    string emailId;
 
-// // function declarations
-// bool userNameExists(string userName);   
-// bool login(); 
-// void signUp(); 
-// bool forgetPassword(); 
-
-// password input function
-string getPassword(){
+public:
+    string getPassword(){
     string password; 
     int ch; 
 
@@ -43,155 +42,93 @@ string getPassword(){
     cout<<endl; // move to the next line after password input
     return password;
 }
+    void login()
+    {
+        string uName;
+        string pass;
+        cout << "------------------------------" << endl;
+        cout << "Enter userName" << endl;
+        getline(cin, uName);
 
-// Check User (already exist or not)'
-bool userNameExists(string userName){
-    string savedUsername, savedPassword; 
+        cout << "Enter password" << endl;
+        pass = getPassword(); 
 
-    ifstream file(FILENAME); 
-    string header; 
-    getline(file, header); // read and ignore the header line 
-    while(file>>savedUsername>>savedPassword){
-        if(userName == savedUsername){
-            return true;
+        cout << "------------------------------" << endl;
+        ifstream fin(uName + ".txt");
+
+        if (fin.is_open())
+        {
+            if (
+                getline(fin, fullName) &&
+                getline(fin, emailId) &&
+                getline(fin, userName) &&
+                getline(fin, password))
+            {
+                if (userName == uName && password == pass)
+                {
+                    cout << "Login Successful\n";
+                }
+                else
+                {
+                    cout << "Invalid Username or Password\n";
+                }
+            }
         }
-    } 
-    return false;
-}
-// forget password section
-
-bool forgetPassword(){
-    cout<<"Enter your username: "<<endl;
-    string userName; 
-    cin>>userName; 
-
-    string savedUsername, savedPassword; 
-
-    ifstream file(FILENAME); 
-    string header; 
-    getline(file, header); // read and ignore the header line 
-
-    while(file>>savedUsername>>savedPassword){
-        if(userName == savedUsername){
-            cout<<"Your password is: "<<savedPassword<<endl;
-            return true; 
-        }
-    }
-    cout<<"Username not found. Please sign up first."<<endl;
-    return false;
-}
-
-// Login section 
-bool login(){
-    string username, password;
-    cout<<"Enter username: "<<endl;
-    cin>>username;
-    cout<<"Enter password: "<<endl;
-    password = getPassword();
-
-    ifstream file(FILENAME);
-
-    if(!file){
-        cout<<" No registered user found. Please sign up first."<<endl;
-        return false;
-    }
-
-    string savedUsername, savedPassword; 
-
-    string header;
-
-    getline(file, header); // read and ignore the header line 
-    while(file>>savedUsername>>savedPassword){
-        if(username == savedUsername && password == savedPassword){
-            return true;
+        else
+        {
+            cout << "This is not an authorise person!" << endl;
         }
     }
-    return false;
-}
-// signup section
-void signUp(){
-    string userName, password; 
-    cout<<"Enter username: "<<endl;
-    cin>>userName; 
-    // what if the username already exists? 
-    if(userNameExists(userName)){
-        cout<<"Username already exists. Please choose a different username. "<<endl;
-        return;
-    }
 
-    cout<<"Enter password: "<<endl;
-    password = getPassword();
+    void registration()
+    {
+        // getting user inputs
+        cout << "--------------------------------" << endl;
+        cout << "Enter fullName" << endl;
+        getline(cin, fullName);
 
-    // file already contains data 
-    ifstream checkFile(FILENAME);
-    bool isEmpty = checkFile.peek() == ifstream::traits_type::eof(); 
-    checkFile.close(); // close the check file stream
+        cout << "Enter email" << endl;
+        getline(cin, emailId);
 
-    ofstream file(FILENAME, ios::app); 
+        cout << "Enter username" << endl;
+        getline(cin, userName);
 
-    if(!file){
-        cout<<"Error opening file"<<endl;
-        return;
-    }
-    // heading 
-    if(isEmpty){
-        file<<"Username\tPassword\n"<<endl; // write heading if file is empty
-    }
+        cout << "Enter password " << endl;
+        password = getPassword();
+        cout << "--------------------------------" << endl;
 
-    file<<userName<<" "<<password<<endl; 
+        // Storing user inputs
+        ofstream fout(userName + ".txt");
+        if (fout.is_open())
+        {
+            fout << fullName << "\n";
+            fout << emailId << "\n";
+            fout << userName << "\n";
+            fout << password << "\n";
 
-    if(!file){
-        cout<<"Error saving account. Please try again."<<endl;
-        return;
-    }
-    
-    file.close();
-    cout<<"Account created successfully"<<endl;
-}
-
-
-
-// MAIN function 
-int main(){
-   cout<<"Welcome to the login/Signup system"<<endl;
-   int choice; 
-
-   do{
-    cout<<"1. Login"<<endl;
-    cout<<"2. Signup"<<endl;
-    cout<<"3. Forget Password"<<endl;
-    cout<<"4. Exit"<<endl;
-    cout<<"Enter your choice: ";
-    cin>>choice;
-
-    switch(choice){
-        case 1: 
-        // Login Section
-        if(login()){
-            cout<<"Login Successful"<<endl;
-        }else{
-            cout<<"Login Failed"<<endl;
+            fout.close();
         }
-        break;
-
-        case 2: 
-        //signup Section
-        signUp(); 
-        break;
-
-        case 3: 
-        // Forget Password section
-        forgetPassword(); 
-        break;
-
-        case 4: 
-        cout<<"Exiting the system"<<endl;
-        break;
+        else
+        {
+            cout << "Error" << endl;
+        }
     }
-   }while(choice!=4);
+};
 
-   return 0; 
+int main()
+{
+    Authentication a1;
+    while (true)
+    {
+        int x;
+        cout << "Enter 1 for login: " << endl;
+        cout << "Enter 2 for registration: " << endl;
+        cin >> x;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // or the safer version below
 
+        if (x == 1)
+            a1.login();
+        else if (x == 2)
+            a1.registration();
+    }
 }
-
-
